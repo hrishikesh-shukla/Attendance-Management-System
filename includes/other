@@ -1,0 +1,63 @@
+<?php
+  $con = mysqli_connect('localhost', 'root', '', 'attendance');
+  $enrollment = $_POST['fetch'];
+  ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AIT: Just Fetching...</title>
+  <meta name="viewport" content="width=device-width, inital-scale=1">
+</head>
+<body>
+  <center>
+    <h3 style="display: inline;" id="greeting"></h3><br>
+    <?php echo "Today is ".date('d/m/y'); ?><br>
+    <hr style="margin: 10px  auto; width: 45%; ">
+  </center>
+  <center>
+    <table border="2">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Course</th>
+              <th>Enrollment</th>
+              <th>Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
+           $query = "SELECT * FROM `students` WHERE enrollment = 01624802017";
+          // $query = "SELECT students.fname, students.lname, students.course, students.semester, markAttendance.attendance FROM students RIGHT JOIN markAttendance ON students.$enrollment = markAttendance.$enrollment";
+          $fetching = mysqli_query($con,$query);
+          if (mysqli_num_rows($fetching) > 0) {
+            while( $row = mysqli_fetch_assoc( $fetching ) ){
+                echo "<tr><td>{$row['fname']}</td><td>{$row['lname']}</td><td>{$row['course']}</td><td>{$row['enrollment']}</td><td>";
+                echo "</td></tr>\n";
+              }
+          }else{
+            echo "welcome".mysqli_error($con);
+          }
+          ?>
+        </tbody>
+      </table>
+  </center>
+  <!-- scripts -->
+  <script src="../scripts/greetings.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!-- multi query -->
+if (mysqli_num_rows($st) > 0) {
+                  while( $row = mysqli_fetch_assoc( $st ) ){
+                      echo "<tr><td>{$row['date']}</td><td>{$row['fname']}</td><td>{$row['lname']}</td><td>{$row['course']}</td><td>{$row['semester']}</td><td>{$row['attendance']}</td></tr>\n"; 
+                    }
+                }
